@@ -1,0 +1,12 @@
+Name: core-system
+Version: 0.01-0
+Conflicts: 
+Arch: x86
+Author: The Siderus Team, based on base-files and base-passwd debian packages.
+Type: precompiled
+Maintainer: Eugenio (g7) <morarossa@gmail.com>
+Dependencies: glibc
+Description: Basic filesystem and settings
+This package contains the base directories of
+a common Linux system. This package is
+ESSENTIAL - do not remove it for any reason!
