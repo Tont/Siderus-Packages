@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# This script WORKS ONLY IF SOURCED.
+# Compile script for package core-system
+
+
+
+function configure {
+
+tocopy="$PWD"
+tmpdir="`mktemp -d`"
+cp -R ../core-system.source $tmpdir/source
+cd $tmpdir/source
+
+cd _COMPILE_
+
+if [ -e ./autogen.sh ]; then
+ ./autogen.sh --prefix=/usr || error "An error occoured when configuring the package."
+elif [ -e ./configure ]; then
+ ./configure || error "An error occoured when configuring the package."
+fi
+
+}
+
+function compile {
+
+make
+make -C doc
+make -C man
+
+}
+
+function 1nstall {
+
+	install -d -m 755 -o root -g root ../usr/sbin
+	install -p -m 755 -o root -g root update-passwd ../usr/sbin/
+
+	install -d -m 755 -o root -g root \
+		../usr/share/man/man8 \
+		../usr/share/man/fr/man8 \
+		../usr/share/man/pl/man8 \
+		../usr/share/man/ru/man8
+	install -p -m 644 -o root -g root man/update-passwd.8 \
+		../usr/share/man/man8/
+	install -p -m 644 -o root -g root man/update-passwd.fr.8 \
+		../usr/share/man/fr/man8/update-passwd.8
+	install -p -m 644 -o root -g root man/update-passwd.pl.8 \
+		../usr/share/man/pl/man8/update-passwd.8
+	install -p -m 644 -o root -g root man/update-passwd.ru.8 \
+		../usr/share/man/ru/man8/update-passwd.8
+	gzip -9 ../usr/share/man/man8/* \
+		../usr/share/man/fr/man8/* \
+		../usr/share/man/pl/man8/* \
+		../usr/share/man/ru/man8/*
+
+cd ..
+rm -rf _COMPILE_
+cp -R * $tocopy/../core-system.compiled
+cd $tocopy
+
+}
+
+function docs {
+
+echo
+
+}
+
+function clean {
+
+rm -rf $tmpdir || error "An error occoured when cleaning the compiled files on $PWD." # Clean with make
+
+}

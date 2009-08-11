@@ -1,0 +1,3 @@
+Here're the core-system sources.
+To compile it, use createpkgs-ng.
+./createpkgs_ng -c -p core-system # In this directory

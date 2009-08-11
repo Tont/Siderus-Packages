@@ -1,0 +1,2 @@
+update-passwd is the same of update-passwd of Debian (Thanks!), but is into core-system.
+This directory, _COMPILE_ will be removed when compiling with createpkgs_ng.sh.
